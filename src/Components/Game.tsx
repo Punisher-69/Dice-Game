@@ -22,19 +22,25 @@ function Game() {
   };
 
   const handleDice = () => {
+    if (!selectedNumber) {
+      setShowError(true);
+      return;
+    }
     setIsLoading(true);
-    if (selectedNumber) {
-      const diceNumber = Math.floor(Math.random() * 6);
+
+    const diceNumber = Math.floor(Math.random() * 6);
+    const img = new Image();
+    img.src = diceImages[diceNumber];
+    img.onload = () => {
       setImage(diceImages[diceNumber]);
       if (selectedNumber === diceNumber + 1) {
         setTotalScore((prev) => prev + diceNumber + 1);
       } else {
         setTotalScore((prev) => prev - 2);
       }
-    } else {
-      setShowError(true);
-    }
-    setIsLoading(false);
+
+      setIsLoading(false);
+    };
   };
 
   return (
