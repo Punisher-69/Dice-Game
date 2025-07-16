@@ -15,12 +15,14 @@ function Game() {
   const [showError, setShowError] = useState(false);
   const navigate = useNavigate();
   const diceImages = [pic1, pic2, pic3, pic4, pic5, pic6];
+  const [islodaing, setIsLoading] = useState(false);
   const handleNumberClick = (number: number) => {
     setSelectedNumber(number);
     setShowError(false);
   };
 
   const handleDice = () => {
+    setIsLoading(true);
     if (selectedNumber) {
       const diceNumber = Math.floor(Math.random() * 6);
       setImage(diceImages[diceNumber]);
@@ -32,6 +34,7 @@ function Game() {
     } else {
       setShowError(true);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -72,7 +75,12 @@ function Game() {
       </div>
       <div className="flex flex-col  items-center gap-2">
         <img className="w-[150px] h-[150px]" src={image} alt="dice1" />
-        <Button onPress={handleDice} color="primary" variant="shadow">
+        <Button
+          onPress={handleDice}
+          color="primary"
+          variant="shadow"
+          isLoading={islodaing}
+        >
           Click to Roll the Dice
         </Button>
         <div className="text-red-600">
